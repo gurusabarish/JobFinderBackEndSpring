@@ -6,6 +6,7 @@ import com.example.jobfinder.payload.auth.SignUpReq;
 import java.util.Map;
 
 public interface AuthService {
-    User signUp(Map<String, Object> user);
-    User signIn(User user);
+    User signUp(User req);
+    User signIn(Map req);
+    User getUserById(Long id);
 }

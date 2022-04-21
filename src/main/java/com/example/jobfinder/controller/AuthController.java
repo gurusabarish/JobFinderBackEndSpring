@@ -21,10 +21,9 @@ public class AuthController {
     AuthServiceImpl authServiceImpl;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> createUser(@RequestBody Map<String, Object> req) {
+    public ResponseEntity<?> createUser(@RequestBody User req) {
         System.out.println(req);
-        User userByEmail = userServiceImpl.findByEmail(req.get("email").toString());
-        System.out.println(userByEmail);
+        User userByEmail = userServiceImpl.findByEmail(req.getEmail());
 
         if (userByEmail != null) {
             Map<String, String> error = new HashMap<>();
@@ -33,5 +32,15 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(authServiceImpl.signUp(req));
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> login(@RequestBody Map<String, Object> req) {
+        return ResponseEntity.ok(authServiceImpl.signIn(req));
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUser(@PathVariable(value = "id") Long token) {
+        return ResponseEntity.ok(authServiceImpl.getUserById(token));
     }
 }

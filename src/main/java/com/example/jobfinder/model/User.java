@@ -14,19 +14,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(unique = true)
     private String name;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-
     @Column(nullable = false)
     private String password;
-
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
+    private String phone;
+    private String country;
+    private String state;
+    private String city;
+    private String address;
+    private String zipCode;
 
     @Column(nullable = false)
     private boolean enabled;

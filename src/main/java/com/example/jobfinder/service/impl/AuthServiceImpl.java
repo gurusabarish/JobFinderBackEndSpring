@@ -19,32 +19,29 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    CompanyRepository companyRepository;
-
     @Override
-    public User signUp(Map<String, Object> req) {
-        if(req.get("role").toString().equals(UserRole.ROLE_SUPER_ADMIN.toString())) {
-
-            Company company = companyRepository.save((Company) req.get("company"));
-            User user = new User();
-            user.setCompany(company);
-            user.setEmail(req.get("email").toString());
-            user.setPassword(req.get("password").toString());
-            user.setName(req.get("name").toString());
-            user.setRole((UserRole) req.get("role"));
-
-            user.setUpdatedAt(new Date());
-            user.setCreatedAt(new Date());
-            return userRepository.save(user);
-        }
-
-        return null;
+    public User signUp(User req) {
+        User user = userRepository.save(req);
+        user.setPassword(null);
+        return user;
     }
 
     @Override
-    public User signIn(User user) {
-        return null;
+    public User signIn(Map req) {
+        User user = userRepository.findByEmail(req.get("email").toString());
+        if(user == null)
+            return null;
+        if(!user.getPassword().equals(req.get("password").toString()))
+            return null;
+
+        return user;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        User user = userRepository.findById(id).get();
+        user.setPassword(null);
+
+        return user;
     }
 }
