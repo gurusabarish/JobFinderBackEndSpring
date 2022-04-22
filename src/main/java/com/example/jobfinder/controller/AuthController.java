@@ -36,7 +36,13 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> login(@RequestBody Map<String, Object> req) {
-        return ResponseEntity.ok(authServiceImpl.signIn(req));
+        User user = authServiceImpl.signIn(req);
+        if (user == null) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "UserEmail or password is incorrect");
+            return ResponseEntity.badRequest().body(error);
+        }
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/user/{id}")

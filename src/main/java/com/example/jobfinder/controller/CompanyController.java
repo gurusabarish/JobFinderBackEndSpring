@@ -56,4 +56,15 @@ public class CompanyController {
         response.put("added", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/add/admin")
+    public ResponseEntity<?> addAdminToCompany(@RequestBody Map<String, Long> req) throws ResourceNotFoundException {
+//        companyServiceImpl.addCompanyToUser((Long) req.get("user_id"), (Long) req.get("company_id"));
+
+        companyServiceImpl.addAdminToCompany(req.get("user_id"), req.get("company_id"));
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("added", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
 }

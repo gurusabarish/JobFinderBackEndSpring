@@ -21,6 +21,14 @@ public class AuthServiceImpl implements AuthService {
     UserRepository userRepository;
     @Override
     public User signUp(User req) {
+        if(req.getRole() == UserRole.ROLE_ADMIN) {
+            req.setEnabled(false);
+        } else {
+            req.setEnabled(true);
+        }
+
+        req.setCreatedAt(new Date());
+        req.setUpdatedAt(new Date());
         User user = userRepository.save(req);
         user.setPassword(null);
         return user;

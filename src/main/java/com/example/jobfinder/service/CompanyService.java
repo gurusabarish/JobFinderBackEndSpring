@@ -14,4 +14,5 @@ public interface CompanyService {
     void delete(Long id) throws ResourceNotFoundException;
     List<Company> findByNameStartsWith(String company);
     void addCompanyToUser(Long userId, Long companyId) throws ResourceNotFoundException;
+    void addAdminToCompany(Long userId, Long companyId) throws ResourceNotFoundException;
 }
