@@ -30,9 +30,9 @@ public class Company {
 //    @JoinColumn(name = "hr_id")
 //    private List Hrs;
 
-    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "admin_id", referencedColumnName = "id")
-    private Set<User> admin;
+//    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+//    private Set<User> admin;
 //
 //    @OneToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name = "admin_id")

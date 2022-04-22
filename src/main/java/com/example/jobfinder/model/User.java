@@ -2,6 +2,8 @@ package com.example.jobfinder.model;
 
 import com.example.jobfinder.enums.UserRole;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 

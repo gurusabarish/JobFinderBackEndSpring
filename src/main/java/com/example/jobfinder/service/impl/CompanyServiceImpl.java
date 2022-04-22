@@ -83,17 +83,17 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
-    @Override
-    public void addAdminToCompany(Long userId, Long companyId) throws ResourceNotFoundException {
-        Company company = companyRepository.findById(companyId).orElseThrow(() -> new ResourceNotFoundException("Company Not Found"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
-
-        user.setCompany(company);
-
-        Set admins = company.getAdmin();
-        admins.add(user);
-
-        company.setAdmin(admins);
-        companyRepository.save(company);
-    }
+//    @Override
+//    public void addAdminToCompany(Long userId, Long companyId) throws ResourceNotFoundException {
+//        Company company = companyRepository.findById(companyId).orElseThrow(() -> new ResourceNotFoundException("Company Not Found"));
+//        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+//
+//        user.setCompany(company);
+//
+//        Set admins = company.getAdmin();
+//        admins.add(user);
+//
+//        company.setAdmin(admins);
+//        companyRepository.save(company);
+//    }
 }
