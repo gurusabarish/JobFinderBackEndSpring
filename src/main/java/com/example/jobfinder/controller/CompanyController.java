@@ -3,6 +3,7 @@ package com.example.jobfinder.controller;
 import com.example.jobfinder.exception.ResourceNotFoundException;
 import com.example.jobfinder.model.Company;
 import com.example.jobfinder.model.User;
+import com.example.jobfinder.payload.company.CompanyCreateReq;
 import com.example.jobfinder.service.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class CompanyController {
     }
 
     @PostMapping()
-    public Company createCompany(@RequestBody Company company) {
+    public Company createCompany(@RequestBody CompanyCreateReq company) {
         return companyServiceImpl.save(company);
     }
 
@@ -45,5 +46,14 @@ public class CompanyController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+
+    // add company to user
+    @PostMapping("/addtouser")
+    public ResponseEntity<?> addCompanyToUser(Map<String, Object> req) throws ResourceNotFoundException {
+        companyServiceImpl.addCompanyToUser((Long) req.get("user_id"), (Long) req.get("company_id"));
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("added", Boolean.TRUE);
+        return ResponseEntity.ok(response);
     }
 }

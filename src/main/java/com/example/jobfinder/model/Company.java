@@ -20,6 +20,6 @@ public class Company {
     private String email;
     private String website;
 
-    @Pattern(regexp = "^[0-9]{10}$")
+//    @Pattern(regexp = "^[0-9]{10}$")
     private String phone;
 }

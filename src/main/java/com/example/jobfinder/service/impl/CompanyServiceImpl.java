@@ -2,7 +2,10 @@ package com.example.jobfinder.service.impl;
 
 import com.example.jobfinder.exception.ResourceNotFoundException;
 import com.example.jobfinder.model.Company;
+import com.example.jobfinder.model.User;
+import com.example.jobfinder.payload.company.CompanyCreateReq;
 import com.example.jobfinder.repository.CompanyRepository;
+import com.example.jobfinder.repository.UserRepository;
 import com.example.jobfinder.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,9 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<Company> findAll() {
@@ -25,8 +31,22 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company save(Company company) {
-        return companyRepository.save(company);
+    public Company save(CompanyCreateReq company) {
+        Company newCompany = new Company();
+        newCompany.setName(company.getName());
+        newCompany.setDescription(company.getDescription());
+        newCompany.setEmail(company.getEmail());
+        newCompany.setPhone(company.getPhone());
+        newCompany.setWebsite(company.getWebsite());
+
+//        newCompany.setOwner(user);
+
+        Company companyToAdd = companyRepository.save(newCompany);
+        User user = userRepository.findById(company.getUserId()).get();
+        user.setCompany(companyToAdd);
+        userRepository.save(user);
+
+        return companyToAdd;
     }
 
     @Override
@@ -51,5 +71,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> findByNameStartsWith(String company) {
         return companyRepository.findAllByNameStartsWith(company);
+    }
+
+    @Override
+    public void addCompanyToUser(Long userId, Long companyId) throws ResourceNotFoundException {
+        Company company = companyRepository.findById(companyId).orElseThrow(() -> new ResourceNotFoundException("Company Not Found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+
+        user.setCompany(company);
+        companyRepository.save(company);
     }
 }
