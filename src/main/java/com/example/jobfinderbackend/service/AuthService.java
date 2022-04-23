@@ -20,6 +20,8 @@ public interface AuthService {
     // Get admins by companyID
     List<UserModel> getAdminsByCompanyId(Long companyId);
 
+    // Approve admin
+    UserModel approveAdmin(Long userId);
 //    List<UserModel> findAll();
 //    UserModel update(long id, UserModel user);
 //    void delete(long id);

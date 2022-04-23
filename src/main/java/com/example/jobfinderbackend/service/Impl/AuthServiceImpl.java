@@ -69,4 +69,14 @@ public class AuthServiceImpl implements AuthService {
     public List<UserModel> getAdminsByCompanyId(Long companyId) {
         return userRepository.findAllByAdminCompanyId(companyId);
     }
+
+    @Override
+    public UserModel approveAdmin(Long userId) {
+        UserModel userModel = userRepository.findById(userId).get();
+        userModel.setEnabled(true);
+
+        UserModel res = userRepository.save(userModel);
+        res.setPassword(null);
+        return res;
+    }
 }

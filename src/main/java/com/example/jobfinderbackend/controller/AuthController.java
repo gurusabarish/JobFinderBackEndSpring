@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -36,13 +37,18 @@ public class AuthController {
     // add companyId to admin user
     @PostMapping(value = "/user/add/company")
     public ResponseEntity<?> addCompanyToUser(@RequestBody AddCompanyToUserReq Req) {
-
         return new ResponseEntity<>(authServiceImpl.addCompanyToUser(Req), HttpStatus.OK);
     }
 
-    //Get all users By companyId
+    //Get all admins By companyId
     @RequestMapping(value = "/admin", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getAllAdminsByCompanyId(@RequestParam(value = "companyId") Long companyId) {
         return new ResponseEntity<>(authServiceImpl.getAdminsByCompanyId(companyId), HttpStatus.OK);
+    }
+
+    // Approve user to manage company
+    @PostMapping(value = "/admin/approve/{userId}")
+    public ResponseEntity<?> approveAdmin(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(authServiceImpl.approveAdmin(userId), HttpStatus.OK);
     }
 }
