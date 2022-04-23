@@ -11,30 +11,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
-public class UserModel {
+@Table(name = "companies")
+public class CompanyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    private String description;
 
     private String email;
-    private String password;
     private String phone;
-
-    private UserRoleEnum role;
-
-    private String name;
-    private String country;
-    private String state;
-    private String city;
     private String address;
-    private String zip;
+    private String website;
 
-    private boolean enabled;
-    private boolean active;
-
-    private Long adminCompanyId;
-    private Long HRCompanyId;
+    private Long ownerId;
 
     private Date createdAt;
     private Date updatedAt;

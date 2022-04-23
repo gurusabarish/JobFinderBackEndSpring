@@ -1,6 +1,7 @@
 package com.example.jobfinderbackend.controller;
 
 import com.example.jobfinderbackend.model.UserModel;
+import com.example.jobfinderbackend.payload.AddCompanyToUserReq;
 import com.example.jobfinderbackend.payload.SignInReq;
 import com.example.jobfinderbackend.service.Impl.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,18 @@ public class AuthController {
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getUser(@RequestParam(value = "token") Long token) {
         return new ResponseEntity<>(authServiceImpl.findById(token), HttpStatus.OK);
+    }
+
+    // add companyId to admin user
+    @PostMapping(value = "/user/add/company")
+    public ResponseEntity<?> addCompanyToUser(@RequestBody AddCompanyToUserReq Req) {
+
+        return new ResponseEntity<>(authServiceImpl.addCompanyToUser(Req), HttpStatus.OK);
+    }
+
+    //Get all users By companyId
+    @RequestMapping(value = "/admin", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getAllAdminsByCompanyId(@RequestParam(value = "companyId") Long companyId) {
+        return new ResponseEntity<>(authServiceImpl.getAdminsByCompanyId(companyId), HttpStatus.OK);
     }
 }
