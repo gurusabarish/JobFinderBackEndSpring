@@ -51,4 +51,16 @@ public class AuthController {
     public ResponseEntity<?> approveAdmin(@PathVariable("userId") Long userId) {
         return new ResponseEntity<>(authServiceImpl.approveAdmin(userId), HttpStatus.OK);
     }
+
+    // Add Hrs
+    @PostMapping(value = "/hr")
+    public ResponseEntity<?> createHR(@RequestBody UserModel user) {
+        return new ResponseEntity<>(authServiceImpl.createHR(user), HttpStatus.OK);
+    }
+
+    // Get all Hrs By companyId
+    @RequestMapping(value = "/hr", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getAllHrsByCompanyId(@RequestParam(value = "companyId") Long companyId) {
+        return new ResponseEntity<>(authServiceImpl.getHRsByCompanyId(companyId), HttpStatus.OK);
+    }
 }

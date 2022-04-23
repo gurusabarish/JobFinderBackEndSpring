@@ -36,6 +36,9 @@ public class UserModel {
     private Long adminCompanyId;
     private Long HRCompanyId;
 
+    // For admin
+    private Long createdBy;
+
     private Date createdAt;
     private Date updatedAt;
 }

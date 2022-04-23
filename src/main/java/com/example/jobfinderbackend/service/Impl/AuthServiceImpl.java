@@ -1,5 +1,6 @@
 package com.example.jobfinderbackend.service.Impl;
 
+import com.example.jobfinderbackend.model.CompanyModel;
 import com.example.jobfinderbackend.model.UserModel;
 import com.example.jobfinderbackend.model.UserRoleEnum;
 import com.example.jobfinderbackend.payload.AddCompanyToUserReq;
@@ -78,5 +79,24 @@ public class AuthServiceImpl implements AuthService {
         UserModel res = userRepository.save(userModel);
         res.setPassword(null);
         return res;
+    }
+
+    @Override
+    public UserModel createHR(UserModel user) {
+        UserModel createdBy = userRepository.findById(user.getCreatedBy()).get();
+        user.setHRCompanyId(createdBy.getAdminCompanyId());
+        user.setRole(UserRoleEnum.ROLE_HR);
+        user.setEnabled(true);
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
+
+        UserModel HR = userRepository.save(user);
+        HR.setPassword(null);
+        return HR;
+    }
+
+    @Override
+    public List<UserModel> getHRsByCompanyId(Long companyId) {
+        return userRepository.findAllByHRCompanyId(companyId);
     }
 }
