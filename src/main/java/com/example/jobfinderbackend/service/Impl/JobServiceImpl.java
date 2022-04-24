@@ -27,12 +27,23 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<JobModel> findByTitleStartsWith(String title) {
+    public List<JobModel> findAllByTitleStartsWith(String title) {
+        System.out.println(title);
         return jobRepository.findAllByTitleStartsWith(title);
+    }
+
+    @Override
+    public List<JobModel> findByTitleContainingIgnoreCase(String title) {
+        return jobRepository.findByTitleContaining(title);
     }
 
     @Override
     public List<JobModel> findAllByCreatedBy(Long id) {
         return jobRepository.findAllByCreatedBy(id);
+    }
+
+    @Override
+    public List<JobModel> findAllByCityAndState(String city, String state) {
+        return jobRepository.findAllByCityAndState(city, state);
     }
 }

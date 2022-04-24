@@ -33,4 +33,19 @@ public class JobController {
     public ResponseEntity<?> getAllJobsByHRId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(jobServiceImpl.findAllByCreatedBy(id), HttpStatus.OK);
     }
+
+    // get all job by city
+    @RequestMapping(value = "/suggest", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getSuggestions(
+            @RequestParam(value = "city") String city,
+            @RequestParam(value = "state") String state
+    ) {
+        return new ResponseEntity<>(jobServiceImpl.findAllByCityAndState(city, state), HttpStatus.OK);
+    }
+
+    // get all job by Title
+    @RequestMapping(value = "/title", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> getJobByTitle(@RequestParam(value = "name") String name) {
+        return new ResponseEntity<>(jobServiceImpl.findByTitleContainingIgnoreCase(name), HttpStatus.OK);
+    }
 }
